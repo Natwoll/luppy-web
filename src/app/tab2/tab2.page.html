@@ -35,22 +35,18 @@
     </ion-item>
 
     <ion-list>
-      <ion-radio-group>
-        <ion-list-header>
-          <ion-label>Máquinas</ion-label>
-        </ion-list-header>
+      <ion-list-header>Máquinas</ion-list-header>
 
-        <ion-item>
-          <ion-label>Selecione</ion-label>
-          <ion-radio slot="start" value="" checked></ion-radio>
-        </ion-item>
-      </ion-radio-group>
-  
-    <ion-item *ngFor="let machine of machines">
-      <ion-label>{{machine.title}}</ion-label>
-    </ion-item>
-    
-  </ion-list>
+      <ion-item>
+        <ion-label>Maquina</ion-label>
+        <ion-select placeholder="Selecione">
+          <ion-select-option *ngFor="let machine of machines | async">
+            {{machine.title}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
 
     <br>
     <ion-button expand="block" (click)="registerClient()">Cadastrar</ion-button>
