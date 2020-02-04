@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Cadastro de Cliente
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div style="max-width: 800px;">
+    <ion-searchbar></ion-searchbar>
+    <br>
+
+    <ion-item class="input-item">
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item class="input-item">
+      <ion-label position="floating">Endereço</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-item class="input-item" style="width: 65%; margin-left: 3%;">
+        <ion-label position="floating">Rua</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item" style="width: 30%; margin-left: 2%;">
+        <ion-label position="floating">Número</ion-label>
+        <ion-input type="number"></ion-input>
+      </ion-item>
+    </ion-item>
+
+    <ion-list>
+      <ion-radio-group>
+        <ion-list-header>
+          <ion-label>Máquinas</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Selecione</ion-label>
+          <ion-radio slot="start" value="" checked></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+  
+    <ion-item *ngFor="let machine of machines">
+      <ion-label>{{machine.title}}</ion-label>
+    </ion-item>
+    
+  </ion-list>
+
+    <br>
+    <ion-button expand="block" (click)="registerClient()">Cadastrar</ion-button>
+  </div>
+</ion-content>

@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-machine',
-  templateUrl: './machine.component.html',
-  styleUrls: ['./machine.component.scss']
+  templateUrl: './machine.page.html',
+  styleUrls: ['./machine.page.scss'],
 })
-export class MachineComponent implements OnInit {
+export class MachinePage implements OnInit {
 
   constructor() { }
 
