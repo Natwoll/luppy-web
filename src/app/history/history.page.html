@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Histórico da Máquina</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-title>Cliente</ion-title>
+  </ion-toolbar>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Informações do cliente</ion-card-subtitle>
+      <ion-card-title>Nome da empresa</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      informações sobre o cliente, nome, endereço, numero, etc.
+      vem do cadastro
+    </ion-card-content>
+  </ion-card>
+
+  <ion-toolbar>
+    <ion-title>Máquina</ion-title>
+  </ion-toolbar>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Informações da máquina</ion-card-subtitle>
+      <ion-card-title>Arcondicionado Splinter xmil btus</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      Peso, pressão, tamanho, cor sla, etc.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-toolbar>
+      <ion-title>Histórico</ion-title>
+  </ion-toolbar>
+  <ion-list>
+    <ion-card *ngFor="let history of machineHistory | async">
+      <ion-card-header>
+        <ion-card-title>{{history.date}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{history.content}}
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <div style="width: 95%; margin-left: 2.5%;">
+    <ion-button expand="block" color="primary" (click)="addHistory()">Escrever Histórico</ion-button>
+  </div>
+</ion-content>

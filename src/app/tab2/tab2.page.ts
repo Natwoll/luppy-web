@@ -9,10 +9,14 @@ import { Observable } from 'rxjs';
 })
 
 export class Tab2Page {
-  private machines: Observable<any[]>;
+  machines: Observable<any[]>;
 
   constructor(db: AngularFirestore) {
     this.machines = db.collection('machines').valueChanges();
+  }
+
+  registerClient():void{
+
   }
 
 }
