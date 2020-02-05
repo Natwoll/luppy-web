@@ -7,8 +7,16 @@
 </ion-header>
 
 <ion-content>
+  <br>
+  <!-----------FORM REGISTER SELECTION------------->
+  <div *ngIf="!(isClient || isMachine)" style="width: 95%; margin-left: 2.5%;">
+    <ion-button expand="block" (click)="registerClient()">Cliente</ion-button>
+    <br>
+    <ion-button expand="block" (click)="registerMachine()">Máquina</ion-button>
+  </div>
 
-  <div style="max-width: 800px;">
+  <!---------------CLIENT REGISTRATION------------->
+  <div style="max-width: 800px;" *ngIf="isClient">
     <ion-item class="input-item">
       <ion-label position="floating">Nome</ion-label>
       <ion-input></ion-input>
@@ -40,10 +48,48 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-
     </ion-list>
+  </div>
 
-    <br>
-    <ion-button expand="block" (click)="registerClient()">Cadastrar</ion-button>
+<!---------------MACHINE REGISTRATION------------->
+<div style="max-width: 800px;" *ngIf="isMachine">
+  <ion-item class="input-item">
+    <ion-label position="floating">Marca</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item class="input-item">
+    <ion-label position="floating">Categoria</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item class="input-item">
+    <ion-label position="floating">Capacidade</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item class="input-item">
+    <ion-label position="floating">Tipo</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item class="input-item">
+    <ion-label position="floating">Modelo</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item class="input-item">
+    <ion-label position="floating">Local de Instalação</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+</div>
+
+  <br>
+  <div style="width: 95%; margin-left: 2.5%;">
+    <ion-button *ngIf="isClient || isMachine" (click)="completeRegistration()"
+      expand="block"
+    >
+    Cadastrar
+  </ion-button>
   </div>
 </ion-content>

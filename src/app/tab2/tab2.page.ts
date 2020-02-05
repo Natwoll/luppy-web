@@ -9,14 +9,28 @@ import { Observable } from 'rxjs';
 })
 
 export class Tab2Page {
+  
+  isClient: boolean;
+  isMachine: boolean;
+
   machines: Observable<any[]>;
 
   constructor(db: AngularFirestore) {
     this.machines = db.collection('machines').valueChanges();
   }
 
-  registerClient():void{
 
+  registerClient() {
+    this.isClient = true;
+  }
+
+  registerMachine() {
+    this.isMachine = true;
+  }
+
+  completeRegistration(){
+    this.isClient = false;
+    this.isMachine = false;
   }
 
 }
