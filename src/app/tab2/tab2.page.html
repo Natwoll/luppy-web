@@ -19,32 +19,32 @@
   <div style="max-width: 800px;" *ngIf="isClient">
     <ion-item class="input-item">
       <ion-label position="floating">Nome</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="clientForm.name"></ion-input>
     </ion-item>
 
     <ion-item class="input-item">
       <ion-label position="floating">Endereço</ion-label>
-      <ion-input></ion-input>
+      <ion-input [(ngModel)]="clientForm.address"></ion-input>
     </ion-item>
 
     <ion-item lines="none">
       <ion-item class="input-item" style="width: 65%; margin-left: 3%;">
         <ion-label position="floating">Rua</ion-label>
-        <ion-input></ion-input>
+        <ion-input [(ngModel)]="clientForm.street"></ion-input>
       </ion-item>
 
       <ion-item class="input-item" style="width: 30%; margin-left: 2%;">
         <ion-label position="floating">Número</ion-label>
-        <ion-input type="number"></ion-input>
+        <ion-input type="number" [(ngModel)]="clientForm.number"></ion-input>
       </ion-item>
     </ion-item>
 
     <ion-list>
       <ion-item class="input-item">
         <ion-label>Maquina</ion-label>
-        <ion-select placeholder="Selecione">
+        <ion-select placeholder="Selecione" ([ngModel])="clientForm.machine">
           <ion-select-option *ngFor="let machine of machines | async">
-            {{machine.title}}
+            {{machine.brand}}: {{machine.model}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -55,32 +55,32 @@
 <div style="max-width: 800px;" *ngIf="isMachine">
   <ion-item class="input-item">
     <ion-label position="floating">Marca</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="machineForm.brand"></ion-input>
   </ion-item>
 
   <ion-item class="input-item">
     <ion-label position="floating">Categoria</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="machineForm.category"></ion-input>
   </ion-item>
 
   <ion-item class="input-item">
     <ion-label position="floating">Capacidade</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="machineForm.capacity"></ion-input>
   </ion-item>
 
   <ion-item class="input-item">
     <ion-label position="floating">Tipo</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="machineForm.kind"></ion-input>
   </ion-item>
 
   <ion-item class="input-item">
     <ion-label position="floating">Modelo</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="machineForm.model"></ion-input>
   </ion-item>
 
   <ion-item class="input-item">
     <ion-label position="floating">Local de Instalação</ion-label>
-    <ion-input></ion-input>
+    <ion-input [(ngModel)]="machineForm.location"></ion-input>
   </ion-item>
 </div>
 
