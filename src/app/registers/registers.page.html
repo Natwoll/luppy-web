@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Cadastros
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <br>
+
+  <!-----------FORM REGISTER SELECTION------------->
+  <div *ngIf="!getClientState() && !getMachineState()" style="width: 95%; margin-left: 2.5%;">
+    <ion-button expand="block" (click)="displayClientForm()">Cliente</ion-button>
+    <br>
+    <ion-button expand="block" (click)="displayMachineForm()">Máquina</ion-button>
+  </div>
+
+  <!---------------CLIENT REGISTRATION------------->
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <div *ngIf="getClientState()" style="max-width: 800px;">
+      <ion-item class="input-item">
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input ngModel name="name"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Endereço</ion-label>
+        <ion-input ngModel name="address"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-item class="input-item" style="width: 65%; margin-left: 3%;">
+          <ion-label position="floating">Rua</ion-label>
+          <ion-input ngModel name="street"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item" style="width: 30%; margin-left: 2%;">
+          <ion-label position="floating">Número</ion-label>
+          <ion-input type="number" ngModel name="number"></ion-input>
+        </ion-item>
+      </ion-item>
+<!--
+      <ion-list>
+        <ion-item class="input-item">
+          <ion-label>Maquina</ion-label>
+          <ion-select placeholder="Selecione" ([ngModel])="clientForm.machine">
+            <ion-select-option *ngFor="let machine of machines | async">
+              {{machine.brand}}: {{machine.model}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>-->
+    </div>
+
+<!---------------MACHINE REGISTRATION------------->
+    <div style="max-width: 800px;" *ngIf="getMachineState()">
+      <ion-item class="input-item">
+        <ion-label position="floating">Marca</ion-label>
+        <ion-input ngModel name="brand"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Categoria</ion-label>
+        <ion-input ngModel name="category"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Capacidade</ion-label>
+        <ion-input ngModel name="capacity"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Tipo</ion-label>
+        <ion-input ngModel name="kind"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Modelo</ion-label>
+        <ion-input ngModel name="model"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item">
+        <ion-label position="floating">Local de Instalação</ion-label>
+        <ion-input ngModel name="location"></ion-input>
+      </ion-item>
+    </div>
+
+    <br>
+
+    <div style="width: 95%; margin-left: 2.5%;">
+      <ion-button *ngIf="getClientState() || getMachineState()" type="submit" expand="block">
+        Cadastrar
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

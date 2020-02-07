@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab2Page } from './tab2.page';
+import { Registers } from './registers.page';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -17,12 +17,12 @@ import { environment as prodEnvironment} from '../../environments/environment.pr
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: Tab2Page }]),
+    RouterModule.forChild([{ path: '', component: Registers }]),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule.initializeApp(prodEnvironment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  declarations: [Tab2Page]
+  declarations: [Registers]
 })
-export class Tab2PageModule {}
+export class RegistersModule {}
