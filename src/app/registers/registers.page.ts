@@ -18,18 +18,18 @@ export class Registers {
     private db: AngularFirestore
     ) { this.machineSelection = this.db.collection<Machine>('/machines/').valueChanges(); }
 
-  private insertMachine(docReference: string, document: Machine): void{
+  private insertMachine(docReference: string, fbDocument: Machine): void{
     let machineDocument: AngularFirestoreDocument<Machine>;
 
     machineDocument = this.db.doc<Machine>(docReference);
-    machineDocument.set(document);
+    machineDocument.set(fbDocument);
   }
 
-  private insertClient(docReference: string, document: Client): void{
+  private insertClient(docReference: string, fbDocument: Client): void{
     let clientDocument: AngularFirestoreDocument<Client>
 
     clientDocument = this.db.doc<Client>(docReference);
-    clientDocument.set(document);
+    clientDocument.set(fbDocument);
   }
 
   public onSubmit(form: any): void{
