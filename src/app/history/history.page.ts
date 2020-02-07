@@ -11,7 +11,7 @@ import { Client, Machine, History as Hist} from '../common/interfaces.page'
 
 export class History implements OnInit{
   //must poit to a path as: <clientName>/[machinesOwned]/<machineName>
-  private key: string;
+  private key: string = 'cliente1/machinesOwned/maquina1';
   private client: Observable<Client>;
   private actualMachine: Observable<Machine>;
   private machines: Observable<Machine[]>;
