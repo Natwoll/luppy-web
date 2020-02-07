@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Client, Machine } from './interfaces.page'
+import { Client, Machine } from '../common/interfaces.page'
 
 @Component({
   selector: 'app-registers',
@@ -32,12 +32,14 @@ export class Registers {
 
   public onSubmit(form: any): void{
     if(this.isClient) {
-      this.insertClient('clients/davi', form.value);
+      const path = '/clients/' + form.value.name + '_' + form.value.address
+      this.insertClient(path.toLowerCase(), form.value);
       this.closeForms();
       return
     }
     if(this.isMachine) {
-      this.insertMachine('machines/davi', form.value);
+      const path = '/machines/' + form.value.brand + '_' + form.value.model + '_' + form.value.capacity
+      this.insertMachine(path, form.value);
       this.closeForms();
       return
     }

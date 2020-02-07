@@ -1,16 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-
-export interface Client {
-  address: string;
-  name: string;
-  number: string;
-}
-
-export interface Machine {
-  title: string;
-}
+import { Client, Machine } from '../common/interfaces.page'
 
 @Component({
   selector: 'app-history',
@@ -18,14 +9,13 @@ export interface Machine {
   styleUrls: ['history.page.scss']
 })
 export class History {
-  qrcod: string; //deve buscar na colection -qrcodes- a referencia do cliente e maquina para puxar historico
   clientDocument: AngularFirestoreDocument<Client>;
   client: Observable<Client>;
   machineDocument: AngularFirestoreDocument<Machine>;
   machine: Observable<Machine>;
   machineHistory: Observable<any[]>;
 
-  constructor(db: AngularFirestore) {
+  constructor(private db: AngularFirestore) {
     this.machineHistory = db.collection('clients/cliente1/machinesOwned/maquina1/history')
     .valueChanges();
 
@@ -35,6 +25,8 @@ export class History {
     this.machineDocument = db.doc<Machine>('/clients/cliente1/');
     this.machine = this.machineDocument.valueChanges();
   }
+
+
 
   addHistory():void {
   }

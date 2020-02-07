@@ -13,5 +13,4 @@ export interface Client {
     capacity: string;
     kind: string;
     model: string;
-    location: string;
   }
