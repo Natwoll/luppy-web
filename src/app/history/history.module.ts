@@ -9,6 +9,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { environment } from '../../environments/environment';
 import { environment as prodEnvironment} from '../../environments/environment.prod';
+import { FormsModule } from '@angular/forms';
+import { NgxQRCodeModule } from 'ngx-qrcode2'
+
 
 @NgModule({
   imports: [
@@ -18,6 +21,8 @@ import { environment as prodEnvironment} from '../../environments/environment.pr
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireModule.initializeApp(prodEnvironment.firebase),
     AngularFirestoreModule,
+    FormsModule,
+    NgxQRCodeModule
   ],
   declarations: [History]
 })

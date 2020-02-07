@@ -40,7 +40,7 @@ export class Registers {
       return
     }
     if(this.isMachine) {
-      const path = '/machines/' + form.value.brand + '_' + form.value.model + '_' + form.value.capacity
+      const path = '/machines/' + form.value.brand + '_' + form.value.model
       this.insertMachine(path, form.value);
       this.closeForms();
       return

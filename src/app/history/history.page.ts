@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Client, Machine, History as Hist} from '../common/interfaces.page'
+import { getFormatedDay } from '../common/functions'
 
 @Component({
   selector: 'app-history',
@@ -15,7 +16,10 @@ export class History implements OnInit{
   private client: Observable<Client>;
   private actualMachine: Observable<Machine>;
   private machines: Observable<Machine[]>;
-  private history: Observable<Hist[]>
+  public history: Observable<Hist[]>
+  public isHistoryRecording: boolean;
+  public isMachineRecording: boolean;
+  public historyContent: string;
 
   constructor(private db: AngularFirestore) {
     this.history = db.collection<Hist>('/clients/'+this.key+'/history/')
@@ -49,8 +53,31 @@ export class History implements OnInit{
     }
   }
 
+  public insertHistory() {
+
+    console.log(this.historyContent)
+
+    let historyDocument: AngularFirestoreDocument<Hist>;
+
+    historyDocument = this.db.doc<Hist>('/clients/cliente1/machinesOwned/maquina1/history/'+getFormatedDay(false));
+    historyDocument.set({
+      date: getFormatedDay(true),
+      content: this.historyContent
+    });
+
+    this.isHistoryRecording = false;
+  }
+
+  public insertMachine(){
+    this.isMachineRecording = false;
+  }
+
   addHistory():void {
-  
+    this.isHistoryRecording = true;
+  }
+
+  addMachine():void {
+    this.isMachineRecording = true;
   }
 
   public getClient(): Observable<Client> { return this.client }

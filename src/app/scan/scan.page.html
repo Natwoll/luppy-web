@@ -5,5 +5,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-button>teste</ion-button>
+  
+  <ion-item>
+    <ion-label position="floating">Digite o código desejado</ion-label>
+    <ion-input [(ngModel)]="qrData"></ion-input>
+  </ion-item>
+
+  <div style="margin-left: 35%;">
+    <ngx-qrcode [qrc-value]="qrData" qrc-type="img"></ngx-qrcode>
+  </div>
+
 </ion-content>
