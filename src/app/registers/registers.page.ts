@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Client, Machine } from '../common/interfaces.page'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-registers',
@@ -11,10 +12,11 @@ import { Client, Machine } from '../common/interfaces.page'
 export class Registers {
   private isClient: boolean;
   private isMachine: boolean;
+  public machineSelection: Observable<Machine[]>;
 
   constructor(
     private db: AngularFirestore
-    ) { }
+    ) { this.machineSelection = this.db.collection<Machine>('/machines/').valueChanges(); }
 
   private insertMachine(docReference: string, document: Machine): void{
     let machineDocument: AngularFirestoreDocument<Machine>;

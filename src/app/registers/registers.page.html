@@ -41,17 +41,19 @@
           <ion-input type="number" ngModel name="number"></ion-input>
         </ion-item>
       </ion-item>
-<!--
+
       <ion-list>
-        <ion-item class="input-item">
-          <ion-label>Maquina</ion-label>
-          <ion-select placeholder="Selecione" ([ngModel])="clientForm.machine">
-            <ion-select-option *ngFor="let machine of machines | async">
-              {{machine.brand}}: {{machine.model}}
-            </ion-select-option>
+        <ion-item>
+          <ion-select placeholder="Máquinas" ngModel name="machine">
+            <ion-item *ngFor="let machine of machineSelection | async">
+              <ion-select-option>
+                {{machine.brand}}, {{machine.model}}: {{machine.capacity}}
+              </ion-select-option>
+            </ion-item>
           </ion-select>
         </ion-item>
-      </ion-list>-->
+      </ion-list>
+
     </div>
 
 <!---------------MACHINE REGISTRATION------------->
