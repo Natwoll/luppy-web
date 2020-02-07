@@ -14,3 +14,8 @@ export interface Client {
     kind: string;
     model: string;
   }
+
+  export interface History {
+    date: string;
+    content: string;
+  }

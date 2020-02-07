@@ -11,7 +11,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Informações do cliente</ion-card-subtitle>
-      <ion-card-title>Nome da empresa</ion-card-title>
+      <ion-card-title>{{(getClient() | async)?.name}}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -38,12 +38,12 @@
       <ion-title>Histórico</ion-title>
   </ion-toolbar>
   <ion-list>
-    <ion-card *ngFor="let history of machineHistory | async">
+    <ion-card *ngFor="let piece of history | async">
       <ion-card-header>
-        <ion-card-title>{{history.date}}</ion-card-title>
+        <ion-card-title>{{piece.date}}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        {{history.content}}
+        {{piece.content}}
       </ion-card-content>
     </ion-card>
   </ion-list>
