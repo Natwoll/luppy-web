@@ -5,72 +5,65 @@
 </ion-header>
 
 <ion-content>
-  <ion-toolbar>
-    <ion-title>Cliente</ion-title>
-  </ion-toolbar>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Informações do cliente</ion-card-subtitle>
-      <ion-card-title>{{(getClient() | async)?.name}}</ion-card-title>
-    </ion-card-header>
+  <div class="main-container">
 
-    <ion-card-content>
-      informações sobre o cliente, nome, endereço, numero, etc.
-      vem do cadastro
-    </ion-card-content>
-  </ion-card>
-
-  <ion-toolbar>
-    <ion-title>Máquina</ion-title>
-  </ion-toolbar>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>Informações da máquina</ion-card-subtitle>
-      <ion-card-title>Arcondicionado Splinter xmil btus</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      Peso, pressão, tamanho, cor sla, etc.
-    </ion-card-content>
-  </ion-card>
-
-  <ion-toolbar>
-      <ion-title>Histórico</ion-title>
-  </ion-toolbar>
-  <ion-list>
-    <ion-card *ngFor="let piece of history | async">
-      <ion-card-header>
-        <ion-card-title>{{piece.date}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{piece.content}}
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
-
-  <div *ngIf="isHistoryRecording" style="width: 95%; margin-left: 2.5%;">
-    <ion-item>
-      <ion-label position="floating">Histórico</ion-label>
-      <ion-textarea auto-grow="true" [(ngModel)]="historyContent"></ion-textarea>
-    </ion-item>
-    <ion-button expand="block" color="warning" (click)="insertHistory()">Gravar</ion-button>
-    <br>
-    <br>
-  </div>
-
-  <div *ngIf="isMachineRecording" style="width: 95%; margin-left: 2.5%;">
-    <div style="margin-left: 32%;">
-      <ngx-qrcode qrc-value="maquina do ricardo" qrc-element-type="img"></ngx-qrcode>
+    <div class="serch-qrcode" style="text-align: center;">
+      <ion-item lines="none">
+        <input class="search-bar" [(ngModel)]="key">
+        <ion-button
+          (click)="loadPageContent()">
+          Buscar
+        </ion-button>
+      </ion-item>
     </div>
-    <ion-button expand="block" color="warning" (click)="insertMachine()">Download</ion-button>
-    <br>
-    <br>
-  </div>
 
-  <div style="width: 95%; margin-left: 2.5%;">
-    <ion-button expand="block" color="primary" (click)="addHistory()">Escrever Histórico</ion-button>
-  </div>
-  <div style="width: 95%; margin-left: 2.5%;">
-    <ion-button expand="block" color="primary" (click)="addMachine()">Cadastrar Máquina</ion-button>
+    <div class="content-loaded" *ngIf="true">
+      <div class="client-container">
+        <ion-toolbar>
+          <ion-title>Cliente</ion-title>
+        </ion-toolbar>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{(client | async)?.name}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <div class="machine-container">
+        <ion-toolbar>
+          <ion-title>Máquina</ion-title>
+        </ion-toolbar>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Informações da máquina</ion-card-subtitle>
+            <ion-card-title>{{(machine | async)?.brand}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <div class="history-container">
+        <ion-toolbar>
+            <ion-title>Histórico</ion-title>
+        </ion-toolbar>
+        <ion-list>
+          <ion-card *ngFor="let piece of history | async">
+            <ion-card-header>
+              <ion-card-title>{{piece.date}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>{{piece.content}}</ion-card-content>
+          </ion-card>
+        </ion-list>
+      </div>
+      <div>
+        <ion-button expand="block">Escrever Histórico</ion-button>
+        <ion-button expand="block">Cadastrar Máquina</ion-button>
+      </div>
+    </div>
   </div>
 </ion-content>
