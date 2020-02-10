@@ -20,5 +20,5 @@ class Auth {
 
 export const auth = { 
     isAuthenticated: Auth.isAuthenticated,
-    getNewToken: Auth.getNewToken
+    getNewToken: Auth.getToken
 };
