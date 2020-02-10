@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as jspdf from 'jspdf'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { auth } from '../serivces/auth';
@@ -9,11 +9,15 @@ import { auth } from '../serivces/auth';
   styleUrls: ['scan.page.scss']
 })
 
-export class Scan {
+export class Scan implements OnInit{
   public qrQtd: number;
   public qrcodeList = [];
 
   constructor(private db: AngularFirestore) {
+  }
+
+  ngOnInit(): void {
+    auth.isAuthenticated();
   }
 
   private async setSerialDocumentIndex(initials: string, times: number) {
