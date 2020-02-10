@@ -15,6 +15,11 @@ export interface Client {
     model: string;
   }
 
+  export interface QrCode {
+    client: string;
+    machine: string;
+  }
+
   export interface History {
     date: string;
     content: string;

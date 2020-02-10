@@ -11,8 +11,10 @@
   <br>
 
   <!-----------FORM REGISTER SELECTION------------->
-  <div *ngIf="!getClientState() && !getMachineState()" style="width: 95%; margin-left: 2.5%;">
+  <div *ngIf="!getClientState() && !getMachineState() && !getQrCodeState()" style="width: 95%; margin-left: 2.5%;">
     <ion-button expand="block" (click)="displayClientForm()">Cliente</ion-button>
+    <br>
+    <ion-button expand="block" (click)="displayQrCodeForm()">QrCode</ion-button>
     <br>
     <ion-button expand="block" (click)="displayMachineForm()">Máquina</ion-button>
   </div>
@@ -53,8 +55,40 @@
           </ion-select>
         </ion-item>
       </ion-list>
-
     </div>
+
+    <!-------------QRCODE REGISTRATION------------->
+    <div *ngIf="getQrCodeState()" style="max-width: 800px;">
+      <ion-list>
+        <ion-item>
+          <ion-select placeholder="Cliente" ngModel name="client">
+            <ion-item *ngFor="let client of clientSelection | async">
+              <ion-select-option>
+                {{client.name}}
+              </ion-select-option>
+            </ion-item>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-item>
+          <ion-select placeholder="Máquina" ngModel name="machine">
+            <ion-item *ngFor="let machine of machineSelection | async">
+              <ion-select-option>
+                {{machine.brand}}, {{machine.model}}
+              </ion-select-option>
+            </ion-item>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-item>
+        <ion-label position="floating">Código</ion-label>
+        <ion-input ngModel name="qrcode"></ion-input>
+      </ion-item>
+    </div>
+
 
 <!---------------MACHINE REGISTRATION------------->
     <div style="max-width: 800px;" *ngIf="getMachineState()">
@@ -92,7 +126,7 @@
     <br>
 
     <div style="width: 95%; margin-left: 2.5%;">
-      <ion-button *ngIf="getClientState() || getMachineState()" type="submit" expand="block">
+      <ion-button *ngIf="getClientState() || getMachineState() || getQrCodeState()" type="submit" expand="block">
         Cadastrar
       </ion-button>
     </div>
