@@ -9,24 +9,10 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 })
 
 export class Scan {
-  private qrValue: string;
-  private qrQtd: number;
-  private qrcodeList = [];
+  public qrQtd: number;
+  public qrcodeList = [];
 
   constructor(private db: AngularFirestore) {
-  }
-
-  private serializeQrCode(quantity: number) {
-    this.getSerialDocumentIndex()
-    .then(
-      (data: any) => {
-        this.setSerialDocumentIndex(data.initials, data.times+quantity);
-        this.qrValue = data.initials;
-      }
-    ).catch(
-      err => {
-        console.log('Got an error tring to serialize the qrcode data', err)
-    });
   }
 
   private async setSerialDocumentIndex(initials: string, times: number) {

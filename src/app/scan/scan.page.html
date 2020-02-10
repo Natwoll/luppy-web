@@ -14,7 +14,7 @@
 
   <div style="float: left;">
     <div style="float: left" *ngFor="let qrcode of qrcodeList">
-      <ngx-qrcode qrc-value="qrData" qrc-type="img"></ngx-qrcode>
+      <ngx-qrcode qrc-value="{{qrcode.data}}" qrc-type="img"></ngx-qrcode>
       <p style="margin-left: 17px;">{{qrcode.data}}</p>
     </div>
     <br>
