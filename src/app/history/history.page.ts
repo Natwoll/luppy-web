@@ -51,7 +51,6 @@ export class History  {
               return null
           })
         );
-        
       } else { reject('error: the specified code key is empty or contains: /'); }
     });
   }
@@ -61,8 +60,8 @@ export class History  {
     .then(
       (data: any) => {
         this.loadClient(data.client)
-        this.loadMachine(data.client + 'machinesOwned' + data.machine)
-        this.loadHistory(data.client + 'machinesOwned' + data.machine + 'history')
+        this.loadMachine(data.machine)
+        this.loadHistory(data.machine + 'history')
       })
     .catch(
       err => {

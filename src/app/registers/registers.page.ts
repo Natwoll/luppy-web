@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Client, Machine, QrCode } from '../common/interfaces.page'
+import { Client, Machine, QrCode, Serial } from '../common/interfaces.page'
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,19 +9,24 @@ import { Observable } from 'rxjs';
   styleUrls: ['registers.page.scss']
 })
 
-export class Registers {
+export class Registers implements OnInit {
   private isClient: boolean;
   private isMachine: boolean;
   private isQrCode: boolean;
-  public machineSelection: Observable<Machine[]>;
-  public clientSelection: Observable<Client[]>
+  private clientSerial: Serial;
+  private machineSerial: Serial;
 
-  constructor(
-    private db: AngularFirestore
-    ) {
+  protected machineSelection: Observable<Machine[]>;
+  protected clientSelection: Observable<Client[]>
+
+  constructor(private db: AngularFirestore) {
       this.machineSelection = this.db.collection<Machine>('/machines/').valueChanges();
       this.clientSelection = this.db.collection<Client>('/clients/').valueChanges();
-    }
+  }
+    
+  ngOnInit() {
+    this.getSerialDocuments();
+  }
 
   private insertMachine(docReference: string, fbDocument: Machine): void{
     let machineDocument: AngularFirestoreDocument<Machine>;
@@ -44,20 +49,27 @@ export class Registers {
     qrcodeDocument.set(fbDocument);
   }
 
-  private serializeClient(): void {
+  private getSerialDocuments(): void {
+    
+  }
+
+  private async serializeClient() {
     
   }
 
   private async serializeMachine() {
-
+    
   }
 
   public onSubmit(form: any): void{
     if(this.isClient) {
-      const path = '/clients/' + form.value.name
-      this.insertClient(path.toLowerCase(), form.value);
-      this.closeForms();
-      return
+      this.serializeClient()
+      .then((clientSerial: any) => {
+        const path = '/clients/' + clientSerial.initials + clientSerial.times;
+        this.insertClient(path.toLowerCase(), form.value);
+        this.closeForms();
+        return
+      });
     }
     if(this.isMachine) {
       this.serializeMachine()
@@ -69,9 +81,9 @@ export class Registers {
       });
     }
     if(this.isQrCode){
-      const path = '/qrcodes/' + form.value.qrcode
-      const clientPath = '/clients/' + form.value.client + '/'
-      const machinePath = '/' + form.value.machine + '/'
+      const path = '/qrcodes/' + form.value.qrcode;
+      const clientPath = '/clients/' + form.value.client;
+      const machinePath = clientPath + '/machinesOwned/' + form.value.machine;
       this.insertQrCode(path.toLowerCase(), { client: clientPath, machine: machinePath });
       this.closeForms();
       return
@@ -104,4 +116,6 @@ export class Registers {
   public getQrCodeState(): boolean { return this.isQrCode }
 
   public getMachineState(): boolean { return this.isMachine }
+
+  public getFormState(): boolean { return this.isClient || this.isMachine || this.isQrCode }
 }

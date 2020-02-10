@@ -126,8 +126,12 @@
     <br>
 
     <div style="width: 95%; margin-left: 2.5%;">
-      <ion-button *ngIf="getClientState() || getMachineState() || getQrCodeState()" type="submit" expand="block">
+      <ion-button *ngIf="getFormState()" type="submit" expand="block">
         Cadastrar
+      </ion-button>
+      <br>
+      <ion-button *ngIf="getFormState()" (click)="closeForms()" expand="block">
+        Voltar
       </ion-button>
     </div>
   </form>
