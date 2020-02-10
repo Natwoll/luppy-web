@@ -7,12 +7,18 @@
 <ion-content>
   
   <ion-item>
-    <ion-label position="floating">Digite o código desejado</ion-label>
-    <ion-input [(ngModel)]="qrData"></ion-input>
+    <ion-label position="floating">Quantidade</ion-label>
+    <ion-input [(ngModel)]="qrQtd" type="number"></ion-input>
   </ion-item>
+  <ion-button expand="block" (click)="generateCodes()">Gerar</ion-button>
 
-  <div style="margin-left: 35%;">
-    <ngx-qrcode [qrc-value]="qrData" qrc-type="img"></ngx-qrcode>
+  <div style="float: left;">
+    <div style="float: left" *ngFor="let qrcode of qrcodeList">
+      <ngx-qrcode qrc-value="qrData" qrc-type="img"></ngx-qrcode>
+      <p style="margin-left: 17px;">{{qrcode.data}}</p>
+    </div>
+    <br>
   </div>
+  <ion-button expand="block" *ngIf="qrcodeList.length > 0" (click)="printQrCodes()">Download</ion-button>
 
 </ion-content>
