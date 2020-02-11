@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import * as jspdf from 'jspdf'
+import * as jspdf from 'jspdf'
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 //import { auth } from '../serivces/auth';
 
@@ -64,39 +64,38 @@ export class Scan implements OnInit{
     }
   }
 
-  // public printQrCodes(): void {
-  //   const doc = new jspdf();
-  //   const images = document.querySelectorAll('img');
-  //   let positionX = 0;
-  //   let positionY = 0;
-  //   let column = 1;
-  //   let listIterator = 0;
-  //   let qrcodes = this.qrcodeList;
+  public printQrCodes(): void {
+    const doc = new jspdf();
+    const images = document.querySelectorAll('img');
+    let positionX = 0;
+    let positionY = 0;
+    let column = 1;
+    let listIterator = 0;
+    let qrcodes = this.qrcodeList;
   
-  //   doc.setFontSize(20);
-  //   doc.text('Lista de QR Codes:', 20, 20);
-  //   doc.setFontSize(13);
-  //   images.forEach.call(images, function(image: HTMLImageElement) {
-  //     switch (column) {
-  //       case 1:
-  //         positionX = 20;
-  //         positionY += 40;
-  //         break;
-  //       case 2:
-  //         positionX += 50;
-  //         break;
-  //       case 3:
-  //         positionX += 50;
-  //         column = 0;
-  //         break;
-  //     } column++;
+    doc.setFontSize(20);
+    doc.text('Lista de QR Codes:', 20, 20);
+    doc.setFontSize(13);
+    images.forEach.call(images, function(image: HTMLImageElement) {
+      switch (column) {
+        case 1:
+          positionX = 20;
+          positionY += 40;
+          break;
+        case 2:
+          positionX += 50;
+          break;
+        case 3:
+          positionX += 50;
+          column = 0;
+          break;
+      } column++;
       
-  //     doc.addImage(image, 'JPEG', positionX, positionY, 40, 40);
-  //     doc.text(qrcodes[listIterator].data, positionX+10, positionY+40);
-  //     listIterator++;
-  //   });
+      doc.addImage(image, 'JPEG', positionX, positionY, 40, 40);
+      doc.text(qrcodes[listIterator].data, positionX+10, positionY+40);
+      listIterator++;
+    });
 
-  //   doc.save('QrCodeList.pdf')
-  // }
-
+    doc.save('QrCodeList.pdf')
+  }
 }

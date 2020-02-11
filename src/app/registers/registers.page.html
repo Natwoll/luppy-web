@@ -49,7 +49,7 @@
           <ion-select placeholder="Máquinas" ngModel name="machine">
             <ion-item *ngFor="let machine of machineSelection | async">
               <ion-select-option>
-                {{machine.brand}}, {{machine.model}}: {{machine.capacity}}
+                {{machine.identifier}}
               </ion-select-option>
             </ion-item>
           </ion-select>
@@ -63,9 +63,7 @@
         <ion-item>
           <ion-select placeholder="Cliente" ngModel name="client">
             <ion-item *ngFor="let client of clientSelection | async">
-              <ion-select-option>
-                {{client.name}}
-              </ion-select-option>
+              <ion-select-option>{{client.name}}</ion-select-option>
             </ion-item>
           </ion-select>
         </ion-item>
@@ -75,9 +73,7 @@
         <ion-item>
           <ion-select placeholder="Máquina" ngModel name="machine">
             <ion-item *ngFor="let machine of machineSelection | async">
-              <ion-select-option>
-                {{machine.brand}}, {{machine.model}}
-              </ion-select-option>
+              <ion-select-option>{{machine.identifier}}</ion-select-option>
             </ion-item>
           </ion-select>
         </ion-item>
@@ -92,6 +88,11 @@
 
 <!---------------MACHINE REGISTRATION------------->
     <div style="max-width: 800px;" *ngIf="getMachineState()">
+      <ion-item class="input-item">
+        <ion-label position="floating">Identificador</ion-label>
+        <ion-input ngModel name="identifier"></ion-input>
+      </ion-item>
+
       <ion-item class="input-item">
         <ion-label position="floating">Marca</ion-label>
         <ion-input  ngModel name="brand"></ion-input>
@@ -116,11 +117,6 @@
         <ion-label position="floating">Modelo</ion-label>
         <ion-input  ngModel name="model"></ion-input>
       </ion-item>
-
-      <ion-item class="input-item">
-        <ion-label position="floating">Local de Instalação</ion-label>
-        <ion-input ngModel name="location"></ion-input>
-      </ion-item>
     </div>
 
     <br>
@@ -129,7 +125,6 @@
       <ion-button *ngIf="getFormState()" type="submit" expand="block">
         Cadastrar
       </ion-button>
-      <br>
       <ion-button *ngIf="getFormState()" (click)="closeForms()" expand="block">
         Voltar
       </ion-button>

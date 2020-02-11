@@ -19,13 +19,13 @@ export class Registers implements OnInit {
   protected machineSelection: Observable<Machine[]>;
   protected clientSelection: Observable<Client[]>
 
+  ngOnInit(){
+    this.queryIndexOnDocuments('/clients/', 'name', 'davi souza')
+  }
+
   constructor(private db: AngularFirestore) {
       this.machineSelection = this.db.collection<Machine>('/machines/').valueChanges();
       this.clientSelection = this.db.collection<Client>('/clients/').valueChanges();
-  }
-    
-  ngOnInit() {
-    this.getSerialDocuments();
   }
 
   private insertMachine(docReference: string, fbDocument: Machine): void{
@@ -49,46 +49,91 @@ export class Registers implements OnInit {
     qrcodeDocument.set(fbDocument);
   }
 
-  private getSerialDocuments(): void {
-    
+  private async queryIndexOnDocuments(collectionReference: string, field: string, value: any) {
+    return new Promise(resolve => {
+    resolve(this.db.firestore.collection(collectionReference)
+    .where(field, '==', value).get()
+    .then(
+      (fbDocument) => { return fbDocument.docs.shift().id }
+    )
+    .catch(err => { console.log('Could not query on collection:', collectionReference, ' got:', err) }))
+    })
   }
 
-  private async serializeClient() {
-    
+  private setSerialDocumentIndexes(
+    docRefered: 'client' | 'machine',
+    serialDoc: {initials: string, times: number}) {
+      const msg = 'Error tring to set the serial document for clients or machines!';
+      if(docRefered === 'client'){
+        this.db.firestore.doc('/serial/clients/').set({initials: serialDoc.initials, times: serialDoc.times})
+        .then(() => { return true }).catch(e => {console.log(msg, e)})
+      }
+      if(docRefered === 'machine'){
+        this.db.firestore.doc('/serial/machines/').set({initials: serialDoc.initials, times: serialDoc.times})
+        .then(() => { return true }).catch(e => {console.log(msg, e)})
+      }
   }
 
-  private async serializeMachine() {
-    
+  private async getSerialDocumentIndexes(docRefered: 'client' | 'machine') {
+    const msg = 'Error tring to get the serial document for clients or machines!'
+    if(docRefered === 'client'){
+      return this.db.firestore.doc('serial/clients').get()
+      .then(data => { return data.data() }).catch(e => {console.log(msg, e)})
+    }
+    if(docRefered === 'machine'){
+      return this.db.firestore.doc('serial/machines').get()
+      .then(data => { return data.data() }).catch(e => {console.log(msg, e)})
+    }
   }
 
   public onSubmit(form: any): void{
     if(this.isClient) {
-      this.serializeClient()
+      this.getSerialDocumentIndexes('client')
       .then((clientSerial: any) => {
         const path = '/clients/' + clientSerial.initials + clientSerial.times;
-        this.insertClient(path.toLowerCase(), form.value);
+        this.insertClient(path, form.value);
+        this.setSerialDocumentIndexes('client', {
+          initials: clientSerial.initials,
+          times: clientSerial.times+1 })
         this.closeForms();
         return
       });
     }
     if(this.isMachine) {
-      this.serializeMachine()
-      .then((machineSerial: any) => {
-        const path = '/machines/' + machineSerial.initials + machineSerial.times;
-        this.insertMachine(path.toLowerCase(), form.value);
-        this.closeForms();
-        return
-      });
+      if(form.value.identifier){
+        this.getSerialDocumentIndexes('machine')
+        .then((machineSerial: any) => {
+          const path = '/machines/' + machineSerial.initials + machineSerial.times;
+          this.insertMachine(path, form.value);
+          this.setSerialDocumentIndexes('machine', {
+            initials: machineSerial.initials,
+            times: machineSerial.times+1 })
+          this.closeForms();
+          return
+        });
+      } else { alert('Para prosseguir é necessário preencher o campo: Identificador.!') }
     }
     if(this.isQrCode){
-      const path = '/qrcodes/' + form.value.qrcode;
-      const clientPath = '/clients/' + form.value.client;
-      const machinePath = clientPath + '/machinesOwned/' + form.value.machine;
-      this.insertQrCode(path.toLowerCase(), { client: clientPath, machine: machinePath });
-      this.closeForms();
-      return
+      if(form.value.client && form.value.machine && form.value.qrcode){
+        let clientPromise = this.queryIndexOnDocuments('clients/', 'name', form.value.client)
+        let machinePromise = this.queryIndexOnDocuments('machines/', 'identifier', form.value.machine)
+        let clientPath: string;
+        let machinePath: string;
+
+        Promise.all([clientPromise, machinePromise])
+        .then((values) => {
+          clientPath = 'clients/' + values[0];
+          machinePath = clientPath + '/machinesOwned/' + values[1];
+
+          this.insertQrCode('qrcodes/' + form.value.qrcode, {
+            client: clientPath,
+            machine: machinePath,
+          })
+        }).catch(err => { console.log(err)});
+      } else { 
+        alert('Para prosseguir é necessário preencher todos os campos!')
+      }
     }
-    console.log('Cannot submit! No forms active!');
   }
 
   public displayClientForm(){ 
