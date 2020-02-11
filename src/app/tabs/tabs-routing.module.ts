@@ -8,22 +8,22 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'scan',
+        path: 'tab1',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../scan/scan.module').then(m => m.ScanModule)
+              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
           }
         ]
       },
       {
-        path: 'registers',
+        path: 'tab2',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../registers/registers.module').then(m => m.RegistersModule)
+              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
           }
         ]
       },
@@ -33,22 +33,22 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../history/history.module').then(m => m.HistoryModule)
+              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/scan',
+        redirectTo: '/tabs/tab1',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/scan',
-  },
-  
+    redirectTo: '/tabs/tab1',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
