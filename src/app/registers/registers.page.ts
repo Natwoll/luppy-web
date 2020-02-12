@@ -16,8 +16,8 @@ export class Registers implements OnInit {
   private clientSerial: Serial;
   private machineSerial: Serial;
 
-  protected machineSelection: Observable<Machine[]>;
-  protected clientSelection: Observable<Client[]>
+  public machineSelection: Observable<Machine[]>;
+  public clientSelection: Observable<Client[]>
 
   ngOnInit(){
     this.queryIndexOnDocuments('/clients/', 'name', 'davi souza')
@@ -87,17 +87,19 @@ export class Registers implements OnInit {
   }
 
   public onSubmit(form: any): void{
-    if(this.isClient) {
-      this.getSerialDocumentIndexes('client')
-      .then((clientSerial: any) => {
-        const path = '/clients/' + clientSerial.initials + clientSerial.times;
-        this.insertClient(path, form.value);
-        this.setSerialDocumentIndexes('client', {
-          initials: clientSerial.initials,
-          times: clientSerial.times+1 })
-        this.closeForms();
-        return
-      });
+    if(this.isClient){
+      if(form.value.name) {
+        this.getSerialDocumentIndexes('client')
+        .then((clientSerial: any) => {
+          const path = '/clients/' + clientSerial.initials + clientSerial.times;
+          this.insertClient(path, form.value);
+          this.setSerialDocumentIndexes('client', {
+            initials: clientSerial.initials,
+            times: clientSerial.times+1 })
+          this.closeForms();
+          return
+        });
+      } else { alert('Para prosseguir é necessário preencher o campo: Nome!') }
     }
     if(this.isMachine) {
       if(form.value.identifier){
@@ -111,7 +113,7 @@ export class Registers implements OnInit {
           this.closeForms();
           return
         });
-      } else { alert('Para prosseguir é necessário preencher o campo: Identificador.!') }
+      } else { alert('Para prosseguir é necessário preencher o campo: Identificador!') }
     }
     if(this.isQrCode){
       if(form.value.client && form.value.machine && form.value.qrcode){

@@ -17,8 +17,6 @@ export class History  {
   public machine: Observable<Machine>;
   public history: Observable<Hist[]>;
 
-  public teste: string;
-
   constructor(private db: AngularFirestore) {
   }
 
@@ -27,45 +25,35 @@ export class History  {
   }
 
   private loadMachine(docReference: string): void {
-    this.client
-    ? this.machine = this.db.doc<Machine>(docReference).valueChanges()
-    : console.log('Could not load the specified machine: Client ins\'t!');
+    this.machine = this.db.doc<Machine>(docReference).valueChanges()
   }
 
   private loadHistory(collectionReference: string): void {
-    this.machine
-    ? this.history = this.db.collection<Hist>(collectionReference).valueChanges()
-    : console.log('Could not load any history: Machine ins\'t loaded!');
+    this.history = this.db.collection<Hist>(collectionReference).valueChanges()
   }
 
-  private async loadReferences() {
-    return new Promise((resolve, reject) => {
-
-      if(this.key !== null || this.key.indexOf('/') === 0) {
-        resolve(
-          this.db.firestore.doc('/qrcodes/' + this.key).get()
-          .then(data => { return data.data() })
-          .catch(
-            err => { 
-              console.log('Could not load the proper references for key: ', this.key, err)
-              return null
-          })
-        );
-      } else { reject('error: the specified code key is empty or contains: /'); }
+  private loadReferences() {
+    return new Promise(resolve => {
+      resolve(
+        this.db.firestore.doc('qrcodes/'+this.key).get()
+        .then(references => {console.log('aaaa:', references)})
+        .catch(err => {console.log(err)})
+      );
     });
   }
 
-  public loadPageContent() {
-    this.loadReferences()
-    .then(
-      (data: any) => {
-        this.loadClient(data.client)
-        this.loadMachine(data.machine)
-        this.loadHistory(data.machine + 'history')
-      })
-    .catch(
-      err => {
-        console.log(err)
-    });
+  public async loadPageContent() {
+    let references: any;
+    await this.loadReferences()
+    .then((value: {client: string, machine: string}) => { references = value; console.log(value.client) })
+    .catch(err => { console.log(err) })
+    
+    console.log(references.client)
+    //this.loadClient(references.client);
   }
+
+  public loadPage() {
+    this.loadPageContent();
+  }
+
 }

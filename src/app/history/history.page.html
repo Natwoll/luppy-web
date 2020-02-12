@@ -7,15 +7,13 @@
 <ion-content>
   <div class="main-container">
 
-    <div class="serch-qrcode" style="text-align: center;">
-      <ion-item lines="none">
-        <input class="search-bar" [(ngModel)]="key">
-        <ion-button
-          (click)="loadPageContent()">
-          Buscar
-        </ion-button>
+    <ion-item lines="none">
+      <ion-item style="width: 80%;">
+        <ion-label position="floating"> Código QR </ion-label>
+        <ion-input style="width: 100%;"></ion-input>
       </ion-item>
-    </div>
+      <ion-button color="danger" (click)="loadPageContent()">Buscar</ion-button>
+    </ion-item>
 
     <div class="content-loaded" *ngIf="true">
       <div class="client-container">
