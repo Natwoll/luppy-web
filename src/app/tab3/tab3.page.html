@@ -10,12 +10,12 @@
     <ion-item lines="none">
       <ion-item style="width: 80%;">
         <ion-label position="floating"> Código QR </ion-label>
-        <ion-input style="width: 100%;"></ion-input>
+        <ion-input style="width: 100%;" [(ngModel)]="key"></ion-input>
       </ion-item>
       <ion-button color="danger" (click)="loadPageContent()">Buscar</ion-button>
     </ion-item>
 
-    <div class="content-loaded" *ngIf="true">
+    <div class="content-loaded" *ngIf="contentLoaded">
       <div class="client-container">
         <ion-toolbar>
           <ion-title>Cliente</ion-title>
@@ -25,7 +25,8 @@
             <ion-card-title>{{(client | async)?.name}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-
+            Contato: {{(client | async)?.contact}},<br>
+            Rua: {{(client | async)?.street}}, Número: {{(client | async)?.number}}<br>
           </ion-card-content>
         </ion-card>
       </div>
@@ -37,7 +38,7 @@
         <ion-card>
           <ion-card-header>
             <ion-card-subtitle>Informações da máquina</ion-card-subtitle>
-            <ion-card-title>{{(machine | async)?.brand}}</ion-card-title>
+            <ion-card-title>{{(machine | async)?.identifier}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             
@@ -58,9 +59,20 @@
           </ion-card>
         </ion-list>
       </div>
-      <div>
-        <ion-button expand="block">Escrever Histórico</ion-button>
-        <ion-button expand="block">Cadastrar Máquina</ion-button>
+
+      <div class="history-registration" *ngIf="isHistory" style="width: 95%; margin-left: 2.5%;">
+        <ion-item>
+          <ion-label position="floating">Conteúdo...</ion-label>
+          <ion-textarea id="historyPiece"></ion-textarea>
+        </ion-item>
+        <ion-button color="success" expand="block" (click)="saveHistory()">Salvar</ion-button>
+        <ion-button color="danger" expand="block">Cancelar</ion-button>
+      </div>
+
+      <br>
+
+      <div style="width: 95%; margin-left: 2.5%;">
+        <ion-button expand="block" (click)="addHistoryPiece()">Escrever Histórico</ion-button>
       </div>
     </div>
   </div>

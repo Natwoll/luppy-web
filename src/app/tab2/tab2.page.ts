@@ -48,7 +48,7 @@ export class Tab2Page implements OnInit {
     qrcodeDocument.set(fbDocument);
   }
 
-  private async queryIndexOnDocuments(collectionReference: string, field: string, value: any) {
+  private queryIndexOnDocuments(collectionReference: string, field: string, value: any) {
     return new Promise(resolve => {
     resolve(this.db.firestore.collection(collectionReference)
     .where(field, '==', value).get()
@@ -130,6 +130,17 @@ export class Tab2Page implements OnInit {
             client: clientPath,
             machine: machinePath,
           })
+          this.db.firestore.doc(machinePath).set({
+            location: form.value.location,
+            observation: form.value.observation
+          });
+          this.db.firestore.doc(machinePath+'/history/'+'serial').set({
+            date: '',
+            times: 0,
+          });
+
+          this.closeForms();
+          return
         }).catch(err => { console.log(err)});
       } else { 
         alert('Para prosseguir é necessário preencher todos os campos!')

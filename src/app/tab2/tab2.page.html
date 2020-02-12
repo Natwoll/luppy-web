@@ -29,7 +29,7 @@
 
       <ion-item class="input-item">
         <ion-label position="floating">Contato</ion-label>
-        <ion-input  ngModel name="address"></ion-input>
+        <ion-input  ngModel name="contact"></ion-input>
       </ion-item>
 
       <ion-item lines="none">
@@ -47,6 +47,11 @@
 
     <!-------------QRCODE REGISTRATION------------->
     <div *ngIf="getQrCodeState()" style="max-width: 800px;">
+      <ion-item>
+        <ion-label position="floating">Código *</ion-label>
+        <ion-input ngModel name="qrcode"></ion-input>
+      </ion-item>
+      
       <ion-list>
         <ion-item>
           <ion-select placeholder="Cliente" ngModel name="client">
@@ -68,8 +73,13 @@
       </ion-list>
 
       <ion-item>
-        <ion-label position="floating">Código *</ion-label>
-        <ion-input ngModel name="qrcode"></ion-input>
+        <ion-label position="floating">Local</ion-label>
+        <ion-input ngModel name="location"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Observação</ion-label>
+        <ion-input ngModel name="observation"></ion-input>
       </ion-item>
     </div>
 
@@ -113,8 +123,8 @@
       <ion-button *ngIf="getFormState()" type="submit" expand="block">
         Cadastrar
       </ion-button>
-      <ion-button *ngIf="getFormState()" (click)="closeForms()" expand="block">
-        Voltar
+      <ion-button color="danger" *ngIf="getFormState()" (click)="closeForms()" expand="block">
+        Cancelar
       </ion-button>
     </div>
   </form>
