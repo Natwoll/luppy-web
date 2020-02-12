@@ -13,6 +13,7 @@ import { getFormatedDay, serializeDocument } from '../common/functions'
 export class Tab3Page {
   private clientPath: string;
   private machinePath: string;
+  private machineRootPath: string;
   private historyPath: string;
  //Variaveis expostas externamente
  public key: string;
@@ -48,6 +49,7 @@ export class Tab3Page {
          this.clientPath = references.data().client;
          this.machinePath = references.data().machine
          this.historyPath = references.data().machine+'/history/'
+         this.machineRootPath = 'machines'+this.machinePath.substring(this.machinePath.lastIndexOf('/'), this.machinePath.indexOf('-'));
       }).catch(err => {console.log(err)})
      );
    });
@@ -59,7 +61,7 @@ export class Tab3Page {
      () => {
         if(this.clientPath && this.machinePath){
           this.loadClient(this.clientPath);
-          this.loadMachine(this.machinePath);
+          this.loadMachine(this.machineRootPath);
           this.loadHistory(this.historyPath);
           this.contentLoaded = true;
         }

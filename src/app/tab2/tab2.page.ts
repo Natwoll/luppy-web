@@ -124,7 +124,7 @@ export class Tab2Page implements OnInit {
         Promise.all([clientPromise, machinePromise])
         .then((values) => {
           clientPath = 'clients/' + values[0];
-          machinePath = clientPath + '/machinesOwned/' + values[1]+(Math.random()*10000).toPrecision(4);
+          machinePath = clientPath + '/machinesOwned/' + values[1]+'-'+(Math.random()*10000).toPrecision(4);
 
           this.insertQrCode('qrcodes/' + form.value.qrcode, {
             client: clientPath,
