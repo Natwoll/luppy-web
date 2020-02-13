@@ -37,11 +37,16 @@
         </ion-toolbar>
         <ion-card>
           <ion-card-header>
-            <ion-card-subtitle>Informações da máquina</ion-card-subtitle>
             <ion-card-title>{{(machine | async)?.identifier}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            
+            Local: {{(ownMachine | async)?.location}},<br>
+            Observação: {{(ownMachine | async)?.observation}},<br>
+            Marca: {{(machine | async)?.brand}},<br>
+            Categoria: {{(machine | async)?.category}},<br>
+            Capacidade: {{(machine | async)?.capacity}},<br>
+            Tipo: {{(machine | async)?.kind}},<br>
+            Modelo: {{(machine | async)?.model}}
           </ion-card-content>
         </ion-card>
       </div>
@@ -66,13 +71,13 @@
           <ion-textarea id="historyPiece"></ion-textarea>
         </ion-item>
         <ion-button color="success" expand="block" (click)="saveHistory()">Salvar</ion-button>
-        <ion-button color="danger" expand="block">Cancelar</ion-button>
+        <ion-button color="danger" expand="block" (click)="closeHistoryForm">Cancelar</ion-button>
       </div>
 
       <br>
 
       <div style="width: 95%; margin-left: 2.5%;">
-        <ion-button expand="block" (click)="addHistoryPiece()">Escrever Histórico</ion-button>
+        <ion-button expand="block" (click)="showHistoryForm()">Escrever Histórico</ion-button>
       </div>
     </div>
   </div>

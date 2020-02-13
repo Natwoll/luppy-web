@@ -18,6 +18,7 @@ export class Tab3Page {
  public key: string;
  public client: Observable<Client>;
  public machine: Observable<Machine>;
+ public ownMachine: Observable<any>;
  public history: Observable<Hist[]>;
  public isHistory: boolean;
  public contentLoaded: boolean;
@@ -31,32 +32,13 @@ export class Tab3Page {
 
  private loadMachine(docReference: string): void {
    this.machine = this.db.doc<Machine>(docReference).valueChanges()
+   this.ownMachine = this.db.doc(docReference).valueChanges()
  }
 
  private loadHistory(collectionReference: string): void {
-   this.history = this.db.collection<Hist>(collectionReference).valueChanges()
+   this.history = this.db.collection<Hist>(collectionReference, ref => ref.where('content', '>', '0'))
+   .valueChanges()
  }
-
- private async setSerialDocumentIndex(initials: string, times: number) {
-  this.db.firestore.doc('/serial/qrcodes/').set({initials: initials, times: times})
-  .then(
-    () => { return true }
-  ).catch(
-    err => {
-      console.log('Got an error tring to set the qrcode serial document', err)
-  });
-}
-
-private getSerialDocumentIndex() {
-  return new Promise(resolve => {
-    let serialDocument: {date: string, times: number};
-    resolve(
-      this.db.firestore.doc(this.historyPath + '/serial/').get()
-      .then((value: any) => { serialDocument = value.data() })
-      .catch(err => { console.log(err)})
-    );
-  });
-}
 
  private loadReferences() {
    return new Promise(resolve => {
@@ -93,10 +75,27 @@ private getSerialDocumentIndex() {
     });
  }
 
-  public addHistoryPiece() { this.isHistory = true; }
+  public saveHistory() {
+    const today = new Date;
+    const dateStr = today.getDate()  + '-' + today.getMonth() + '-' + today.getFullYear()
+    const historyContent = document.getElementById('historyPiece')
 
-  public saveHistory(): void {
-    this.db.doc(this.historyPath).set(document.getElementById('historyPiece').innerText);
+    this.db.firestore.doc(this.historyPath+'serial').get()
+    .then((serial: any) => {
+
+      this.db.firestore.doc(this.historyPath + dateStr + serial.data().times)
+      .set({date: dateStr, content: historyContent.innerText});
+
+      this.db.firestore.doc(this.historyPath+'serial').set({date: dateStr, times: Number(serial.data().times+1)})
+    })
+    .catch(err => { console.log('asdasdaasds'+err) })
+
+
+    this.isHistory = false;
   }
+
+  public showHistoryForm() { this.isHistory = true; }
+
+  public closeHistoryForm() { this.isHistory = false; }
 
 }
