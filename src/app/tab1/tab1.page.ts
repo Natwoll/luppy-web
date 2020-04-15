@@ -41,8 +41,8 @@ export class Tab1Page implements OnInit{
 
   public generateCodes(): void {
 
-    if(this.qrQtd > 18){
-      alert('É permitido imprimir no máximo 18 QrCode por vez');
+    if(this.qrQtd > 20){
+      alert('É permitido imprimir no máximo 20 QrCode por vez');
     } else {
       let iterator = 1;
       let qtdQrcode = this.qrQtd;
@@ -71,27 +71,36 @@ export class Tab1Page implements OnInit{
     let column = 1;
     let listIterator = 0;
     let qrcodes = this.qrcodeList;
+    let firstTime: boolean = true;
   
-    doc.setFontSize(20);
-    doc.text('Lista de QR Codes:', 20, 20);
-    doc.setFontSize(13);
+    // doc.setFontSize(20);
+    // doc.text('Lista de QR Codes:', 20, 20);
+    // doc.setFontSize(13);
     images.forEach.call(images, function(image: HTMLImageElement) {
       switch (column) {
         case 1:
           positionX = 20;
-          positionY += 40;
+          if(firstTime) {
+            positionY += 20;
+            firstTime = false;
+          } else {
+            positionY += 60;
+          }
           break;
         case 2:
-          positionX += 50;
+          positionX += 45;
           break;
         case 3:
-          positionX += 50;
+          positionX += 60;
+          break;
+        case 4:
+          positionX += 45;
           column = 0;
           break;
       } column++;
       
       doc.addImage(image, 'JPEG', positionX, positionY, 40, 40);
-      doc.text(qrcodes[listIterator].data, positionX+10, positionY+40);
+      // doc.text(qrcodes[listIterator].data, positionX+10, positionY+40);
       listIterator++;
     });
 
