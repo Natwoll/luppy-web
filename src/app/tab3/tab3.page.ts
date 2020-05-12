@@ -15,20 +15,24 @@ export class Tab3Page {
   private machinePath: string;
   private machineRootPath: string;
   private historyPath: string;
- //Variaveis expostas externamente
- public key: string;
- public client: Observable<Client>;
- public machine: Observable<Machine>;
- public ownMachine: Observable<any>;
- public history: Observable<Hist[]>;
- public isHistory: boolean;
- public contentLoaded: boolean;
- public historyPiece: string;
+  //Variaveis expostas externamente
+  public key: string;
+  public client: Observable<Client>;
+  public machine: Observable<Machine>;
+  public ownMachine: Observable<any>;
+  public history: Observable<Hist[]>;
+  public isHistory: boolean;
+  public contentLoaded: boolean;
+  public historyPiece: string;
+  //Forms para atualizar cadastros
+  public isDisplay: boolean = true;
+  public isClient: boolean;
+  public isMachine: boolean;
 
  constructor(private db: AngularFirestore) { }
 
  private loadClient(docReference: string): void {
-   this.client = this.db.doc<Client>(docReference).valueChanges()
+   this.client = this.db.doc<Client>(docReference).valueChanges()//
  }
 
  private loadMachine(docReference: string): void {
@@ -96,8 +100,46 @@ export class Tab3Page {
     this.isHistory = false;
   }
 
+  public onSubmit(form: any): void{
+    if(this.isClient) {
+      form.value.name
+      ? this.db.doc(this.clientPath).set(form.value)
+      : alert('Nome do cliente é obrigatório');
+    }
+    if(this.isMachine) {
+      form.value.identifier
+      ? this.db.doc(this.machineRootPath).set(form.value)
+      : alert('Identificador de máquina é obrigatório');
+    }
+    this.closeForms();
+  }
+
+  public displayClientForm(){ 
+    this.isClient = true;
+    this.isDisplay = false;
+  }
+
+  public displayMachineForm(){
+    this.isMachine = true;
+    this.isDisplay = false;
+  }
+
+  public closeForms() {
+    this.isDisplay = true;
+    this.isClient = false;
+    this.isMachine = false;
+  }
+
   public showHistoryForm() { this.isHistory = true; }
 
   public closeHistoryForm() { this.isHistory = false; }
+
+  public getClientState(): boolean { return this.isClient }
+
+  public getMachineState(): boolean { return this.isMachine }
+
+  public getDisplayState(): boolean { return this.isDisplay }
+
+  public getFormState(): boolean { return this.isClient || this.isMachine }
 
 }

@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="main-container">
+  <div class="main-container" *ngIf="getDisplayState()">
 
     <ion-item lines="none">
       <ion-item style="width: 80%;">
@@ -28,6 +28,7 @@
             Contato: {{(client | async)?.contact}},<br>
             Rua: {{(client | async)?.street}}, Número: {{(client | async)?.number}}<br>
           </ion-card-content>
+          <ion-button size="small" (click)="displayClientForm()">Atualizar Cliente</ion-button>
         </ion-card>
       </div>
 
@@ -40,7 +41,6 @@
             <ion-card-title>{{(machine | async)?.identifier}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            Local: {{(ownMachine | async)?.location}},<br>
             Observação: {{(ownMachine | async)?.observation}},<br>
             Marca: {{(machine | async)?.brand}},<br>
             Categoria: {{(machine | async)?.category}},<br>
@@ -48,6 +48,7 @@
             Tipo: {{(machine | async)?.kind}},<br>
             Modelo: {{(machine | async)?.model}}
           </ion-card-content>
+          <ion-button size="small" (click)="displayMachineForm()">Atualizar Máquina</ion-button>
         </ion-card>
       </div>
 
@@ -80,5 +81,80 @@
         <ion-button expand="block" (click)="showHistoryForm()">Escrever Histórico</ion-button>
       </div>
     </div>
+  </div>
+
+  <!---------------UPDATE REGISTERS------------->
+
+  <div class="registers">
+    <!--------------- CLIENT ------------->
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <div *ngIf="getClientState()" style="max-width: 800px;">
+        <ion-item class="input-item">
+          <ion-label position="floating">Nome *</ion-label>
+          <ion-input  ngModel name="name"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Contato</ion-label>
+          <ion-input  ngModel name="contact"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-item class="input-item" style="width: 65%; margin-left: 3%;">
+            <ion-label position="floating">Rua</ion-label>
+            <ion-input ngModel name="street"></ion-input>
+          </ion-item>
+
+          <ion-item class="input-item" style="width: 30%; margin-left: 2%;">
+            <ion-label position="floating">Número</ion-label>
+            <ion-input type="number" ngModel name="number"></ion-input>
+          </ion-item>
+        </ion-item>
+      </div>
+
+  <!--------------- MACHINE ------------->
+      <div style="max-width: 800px;" *ngIf="getMachineState()">
+        <ion-item class="input-item">
+          <ion-label position="floating">Identificador *</ion-label>
+          <ion-input ngModel name="identifier"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Marca</ion-label>
+          <ion-input  ngModel name="brand"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Categoria</ion-label>
+          <ion-input ngModel name="category"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Capacidade</ion-label>
+          <ion-input ngModel name="capacity"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Tipo</ion-label>
+          <ion-input ngModel name="kind"></ion-input>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Modelo</ion-label>
+          <ion-input  ngModel name="model"></ion-input>
+        </ion-item>
+      </div>
+
+      <br>
+
+      <div style="width: 95%; margin-left: 2.5%;">
+        <ion-button *ngIf="getFormState()" type="submit" expand="block">
+          Cadastrar
+        </ion-button>
+        <ion-button color="danger" *ngIf="getFormState()" (click)="closeForms()" expand="block">
+          Cancelar
+        </ion-button>
+      </div>
+    </form>
   </div>
 </ion-content>
