@@ -75,7 +75,7 @@ export class Tab1Page implements OnInit{
   
     // doc.setFontSize(20);
     // doc.text('Lista de QR Codes:', 20, 20);
-    // doc.setFontSize(13);
+    doc.setFontSize(13);
     images.forEach.call(images, function(image: HTMLImageElement) {
       switch (column) {
         case 1:
@@ -100,7 +100,7 @@ export class Tab1Page implements OnInit{
       } column++;
       
       doc.addImage(image, 'JPEG', positionX, positionY, 40, 40);
-      // doc.text(qrcodes[listIterator].data, positionX+10, positionY+40);
+      doc.text(qrcodes[listIterator].data, positionX+10, positionY+40);
       listIterator++;
     });
 
